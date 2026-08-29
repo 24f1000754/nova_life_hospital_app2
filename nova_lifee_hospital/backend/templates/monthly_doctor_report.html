@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            color: #000000;
+        }
+        .email-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            border: 1px solid #cccccc;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #000000;
+        }
+        .header p {
+            margin: 10px 0 0 0;
+            font-size: 14px;
+            color: #333333;
+        }
+        .content {
+            line-height: 1.6;
+        }
+        .summary-section {
+            border: 1px solid #000000;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            background-color: #f5f5f5;
+        }
+        .summary-section h2 {
+            margin: 0;
+            font-size: 36px;
+            color: #000000;
+        }
+        .summary-section p {
+            margin: 10px 0 0 0;
+            font-size: 14px;
+            color: #333333;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 30px 0 15px 0;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #000000;
+            color: #000000;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table th {
+            padding: 10px;
+            text-align: left;
+            font-weight: bold;
+            background-color: #f5f5f5;
+            border: 1px solid #cccccc;
+        }
+        table td {
+            padding: 10px;
+            border: 1px solid #cccccc;
+        }
+        .info-box {
+            border: 1px solid #cccccc;
+            padding: 15px;
+            margin: 15px 0;
+            background-color: #fafafa;
+        }
+        .info-box strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .stats-table {
+            width: 100%;
+            margin: 20px 0;
+        }
+        .stats-table td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #cccccc;
+            background-color: #f5f5f5;
+        }
+        .stats-table .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .stats-table .stat-label {
+            font-size: 12px;
+            color: #666666;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #cccccc;
+            text-align: center;
+            font-size: 12px;
+            color: #666666;
+        }
+        ul {
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Monthly Activity Report</h1>
+            <p>{{ month_name }} {{ year }} - Nova Life Hospital</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <p><strong>Dear Dr. {{ doctor_name }},</strong></p>
+            <p>
+                This is your monthly activity report for <strong>{{ month_name }} {{ year }}</strong>.
+            </p>
+
+            <!-- Summary Section -->
+            <div class="summary-section">
+                <h2>{{ total_appointments }}</h2>
+                <p>Total Appointments Completed</p>
+            </div>
+
+            <!-- Statistics Table -->
+            <table class="stats-table">
+                <tr>
+                    <td>
+                        <span class="stat-number">{{ unique_patients }}</span>
+                        <span class="stat-label">Unique Patients</span>
+                    </td>
+                    <td>
+                        <span class="stat-number">{{ total_diagnoses }}</span>
+                        <span class="stat-label">Diagnoses Provided</span>
+                    </td>
+                    <td>
+                        <span class="stat-number">{{ total_prescriptions }}</span>
+                        <span class="stat-label">Prescriptions Given</span>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- Appointment Details -->
+            <h3 class="section-title">1. Appointment Details</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Patient Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for apt in appointments %}
+                    <tr>
+                        <td>{{ apt.date }}</td>
+                        <td>{{ apt.time }}</td>
+                        <td>{{ apt.patient_name }}</td>
+                        <td>{{ apt.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Diagnosis & Treatment Summary -->
+            <h3 class="section-title">2. Diagnosis and Treatment Summary</h3>
+            {% for apt in appointments %}
+            <div class="info-box">
+                <p><strong>Patient Name:</strong> {{ apt.patient_name }}</p>
+                <p><strong>Date:</strong> {{ apt.date }} | <strong>Time:</strong> {{ apt.time }}</p>
+                
+                <p><strong>Diagnosis:</strong></p>
+                <p>{{ apt.diagnosis }}</p>
+                
+                <p><strong>Prescription/Treatment:</strong></p>
+                <p>{{ apt.prescription }}</p>
+            </div>
+            {% endfor %}
+
+            <!-- Performance Summary -->
+            <h3 class="section-title">3. Monthly Performance Summary</h3>
+            <ul>
+                <li>Total appointments completed: <strong>{{ total_appointments }}</strong></li>
+                <li>Unique patients treated: <strong>{{ unique_patients }}</strong></li>
+                <li>Diagnoses provided: <strong>{{ total_diagnoses }}</strong></li>
+                <li>Prescriptions/treatments given: <strong>{{ total_prescriptions }}</strong></li>
+            </ul>
+
+            <p style="margin-top: 30px;">
+                Thank you for your continued dedication to patient care.
+            </p>
+
+            <p>
+                Best regards,<br>
+                <strong>Nova Life Hospital Administration</strong>
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Nova Life Hospital</strong></p>
+            <p>This is an automated monthly report generated by the Hospital Management System.</p>
+            <p>Please do not reply to this email.</p>
+        </div>
+    </div>
+</body>
+</html>
