@@ -441,10 +441,10 @@ export default {
       if (!this.userId) return
       try {
         const [profRes, statsRes, appRes, patRes] = await Promise.all([
-          axios.get(`http://127.0.0.1:5000/api/doctor/profile/${this.userId}`),
-          axios.get(`http://127.0.0.1:5000/api/doctor/stats/${this.userId}`),
-          axios.get(`http://127.0.0.1:5000/api/doctor/appointments/${this.userId}`),
-          axios.get(`http://127.0.0.1:5000/api/doctor/patients/${this.userId}`)
+          axios.get(`https://nova-life-hospital.onrender.com/api/doctor/profile/${this.userId}`),
+          axios.get(`https://nova-life-hospital.onrender.com/api/doctor/stats/${this.userId}`),
+          axios.get(`https://nova-life-hospital.onrender.com/api/doctor/appointments/${this.userId}`),
+          axios.get(`https://nova-life-hospital.onrender.com/api/doctor/patients/${this.userId}`)
         ])
 
         this.profile = profRes.data || {}
@@ -462,7 +462,7 @@ export default {
     },
     async save() {
       try {
-        await axios.put(`http://127.0.0.1:5000/api/doctor/update-profile/${this.userId}`, this.form)
+        await axios.put(`https://nova-life-hospital.onrender.com/api/doctor/update-profile/${this.userId}`, this.form)
         alert('Profile updated successfully!')
         this.editing = false
         await this.load()
@@ -473,7 +473,7 @@ export default {
     async addSlot() {
       if (!this.slot.date || !this.slot.time) return
       try {
-        await axios.post('http://127.0.0.1:5000/api/doctor/add-availability', {
+        await axios.post('https://nova-life-hospital.onrender.com/api/doctor/add-availability', {
           doctor_id: this.userId,
           date: this.slot.date,
           time: this.slot.time
@@ -487,7 +487,7 @@ export default {
     },
     async complete(id) {
       try {
-        await axios.put('http://127.0.0.1:5000/api/doctor/update-status', {
+        await axios.put('https://nova-life-hospital.onrender.com/api/doctor/update-status', {
           appointment_id: id,
           status: 'Completed'
         })
@@ -502,7 +502,7 @@ export default {
     async cancel(id) {
       if (!confirm('Are you sure you want to cancel this appointment?')) return
       try {
-        await axios.put('http://127.0.0.1:5000/api/doctor/update-status', {
+        await axios.put('https://nova-life-hospital.onrender.com/api/doctor/update-status', {
           appointment_id: id,
           status: 'Cancelled'
         })

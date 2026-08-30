@@ -183,7 +183,7 @@ export default {
       this.loading = true
 
       try {
-        const res = await axios.post('http://127.0.0.1:5000/api/login', {
+        const res = await axios.post('https://nova-life-hospital.onrender.com/api/login', {
           email: this.email,
           password: this.password
         })

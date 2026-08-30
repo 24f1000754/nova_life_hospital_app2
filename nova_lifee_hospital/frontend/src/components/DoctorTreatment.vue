@@ -139,7 +139,7 @@ export default {
     async saveTreatment() {
       this.saving = true
       try {
-        await axios.put('http://127.0.0.1:5000/api/doctor/add-treatment', {
+        await axios.put('https://nova-life-hospital.onrender.com/api/doctor/add-treatment', {
           appointment_id: this.id,
           diagnosis: this.form.diagnosis,
           prescription:

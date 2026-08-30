@@ -679,10 +679,10 @@ export default {
     async loadAll() {
       try {
         const [statsRes, docRes, patRes, appRes] = await Promise.all([
-          axios.get('http://127.0.0.1:5000/api/admin/stats'),
-          axios.get('http://127.0.0.1:5000/api/admin/doctors'),
-          axios.get('http://127.0.0.1:5000/api/admin/patients'),
-          axios.get('http://127.0.0.1:5000/api/admin/appointments')
+          axios.get('https://nova-life-hospital.onrender.com/api/admin/stats'),
+          axios.get('https://nova-life-hospital.onrender.com/api/admin/doctors'),
+          axios.get('https://nova-life-hospital.onrender.com/api/admin/patients'),
+          axios.get('https://nova-life-hospital.onrender.com/api/admin/appointments')
         ])
 
         this.stats = statsRes.data
@@ -696,7 +696,7 @@ export default {
     async createDoctor() {
       this.creatingDoctor = true
       try {
-        await axios.post('http://127.0.0.1:5000/api/admin/create-doctor', this.form)
+        await axios.post('https://nova-life-hospital.onrender.com/api/admin/create-doctor', this.form)
         alert('Doctor account successfully created!')
         this.form = { name: '', email: '', password: '', specialization: '', bio: '' }
         await this.loadAll()
@@ -709,7 +709,7 @@ export default {
     async addSlot() {
       if (!this.selectedDoctor || !this.slot.date || !this.slot.time) return
       try {
-        await axios.post('http://127.0.0.1:5000/api/admin/add-availability', {
+        await axios.post('https://nova-life-hospital.onrender.com/api/admin/add-availability', {
           doctor_id: this.selectedDoctor.id,
           date: this.slot.date,
           time: this.slot.time
@@ -723,7 +723,7 @@ export default {
     async loadSlots() {
       if (!this.selectedDoctor) return
       try {
-        const res = await axios.get(`http://127.0.0.1:5000/api/admin/doctor-slots/${this.selectedDoctor.id}`)
+        const res = await axios.get(`https://nova-life-hospital.onrender.com/api/admin/doctor-slots/${this.selectedDoctor.id}`)
         this.slots = res.data.data || []
       } catch (err) {
         console.error('Error loading doctor slots:', err)
@@ -732,7 +732,7 @@ export default {
     async deleteSlot(id) {
       if (!confirm('Remove this availability slot?')) return
       try {
-        await axios.delete(`http://127.0.0.1:5000/api/admin/delete-slot/${id}`)
+        await axios.delete(`https://nova-life-hospital.onrender.com/api/admin/delete-slot/${id}`)
         await this.loadSlots()
       } catch (err) {
         alert('Failed to delete slot')
@@ -760,7 +760,7 @@ export default {
     },
     async updateDoctor() {
       try {
-        await axios.put(`http://127.0.0.1:5000/api/admin/update-doctor/${this.editingDoctor.id}`, this.editForm)
+        await axios.put(`https://nova-life-hospital.onrender.com/api/admin/update-doctor/${this.editingDoctor.id}`, this.editForm)
         alert('Doctor details updated successfully')
         this.editingDoctor = null
         await this.loadAll()
@@ -770,7 +770,7 @@ export default {
     },
     async updatePatient() {
       try {
-        await axios.put(`http://127.0.0.1:5000/api/admin/update-patient/${this.editingPatient.id}`, this.editPatientForm)
+        await axios.put(`https://nova-life-hospital.onrender.com/api/admin/update-patient/${this.editingPatient.id}`, this.editPatientForm)
         alert('Patient details updated successfully')
         this.editingPatient = null
         await this.loadAll()
@@ -782,7 +782,7 @@ export default {
       const actionLabel = d.is_blacklisted ? 'Unblock' : 'Blacklist/Block'
       if (!confirm(`${actionLabel} Dr. ${d.name}?`)) return
       try {
-        await axios.put(`http://127.0.0.1:5000/api/admin/blacklist-doctor/${d.id}`, {
+        await axios.put(`https://nova-life-hospital.onrender.com/api/admin/blacklist-doctor/${d.id}`, {
           is_blacklisted: !d.is_blacklisted
         })
         await this.loadAll()
@@ -793,7 +793,7 @@ export default {
     async deleteDoctor(id) {
       if (!confirm('Are you sure you want to permanently delete this doctor?')) return
       try {
-        await axios.delete(`http://127.0.0.1:5000/api/admin/delete-doctor/${id}`)
+        await axios.delete(`https://nova-life-hospital.onrender.com/api/admin/delete-doctor/${id}`)
         await this.loadAll()
       } catch (err) {
         alert('Failed to delete doctor')
@@ -802,7 +802,7 @@ export default {
     async deletePatient(id) {
       if (!confirm('Are you sure you want to permanently delete this patient record?')) return
       try {
-        await axios.delete(`http://127.0.0.1:5000/api/admin/delete-patient/${id}`)
+        await axios.delete(`https://nova-life-hospital.onrender.com/api/admin/delete-patient/${id}`)
         await this.loadAll()
       } catch (err) {
         alert('Failed to delete patient')
@@ -814,7 +814,7 @@ export default {
         return
       }
       try {
-        const res = await axios.get(`http://127.0.0.1:5000/api/admin/search?q=${encodeURIComponent(this.search)}`)
+        const res = await axios.get(`https://nova-life-hospital.onrender.com/api/admin/search?q=${encodeURIComponent(this.search)}`)
         this.doctors = res.data.doctors || []
         this.patients = res.data.patients || []
 

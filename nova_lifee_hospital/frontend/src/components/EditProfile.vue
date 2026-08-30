@@ -105,7 +105,7 @@ export default {
   async mounted() {
     if (!this.user_id) return
     try {
-      const res = await axios.get(`http://127.0.0.1:5000/api/patient/profile/${this.user_id}`)
+      const res = await axios.get(`https://nova-life-hospital.onrender.com/api/patient/profile/${this.user_id}`)
       this.form = {
         name: res.data.name || '',
         age: res.data.age || '',
@@ -121,7 +121,7 @@ export default {
       this.saving = true
       this.msg = ''
       try {
-        await axios.put(`http://127.0.0.1:5000/api/patient/profile/${this.user_id}`, this.form)
+        await axios.put(`https://nova-life-hospital.onrender.com/api/patient/profile/${this.user_id}`, this.form)
         this.msg = 'Profile updated successfully!'
         localStorage.setItem('name', this.form.name)
         // Dispatch storage event to sync header

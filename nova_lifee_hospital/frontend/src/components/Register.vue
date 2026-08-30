@@ -199,7 +199,7 @@ export default {
       this.loading = true
 
       try {
-        const res = await axios.post('http://127.0.0.1:5000/api/register', this.form)
+        const res = await axios.post('https://nova-life-hospital.onrender.com/api/register', this.form)
         this.msg = res.data.message || 'Patient registered successfully! You can now sign in.'
         this.error = ''
         // Reset form upon successful registration

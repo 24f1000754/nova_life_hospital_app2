@@ -127,7 +127,7 @@ export default {
   async mounted() {
     if (!this.id) return
     try {
-      const res = await axios.get(`http://127.0.0.1:5000/api/doctor/profile/${this.id}`)
+      const res = await axios.get(`https://nova-life-hospital.onrender.com/api/doctor/profile/${this.id}`)
       this.form = res.data || {}
     } catch (err) {
       console.error('Error fetching doctor profile:', err)
@@ -137,7 +137,7 @@ export default {
     async save() {
       this.saving = true
       try {
-        await axios.put(`http://127.0.0.1:5000/api/doctor/update-profile/${this.id}`, this.form)
+        await axios.put(`https://nova-life-hospital.onrender.com/api/doctor/update-profile/${this.id}`, this.form)
         alert('Profile updated successfully!')
         this.$router.push('/doctor')
       } catch (err) {

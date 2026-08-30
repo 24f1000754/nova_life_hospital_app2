@@ -473,7 +473,7 @@ export default {
     },
     async loadDoctorAvailability() {
       try {
-        const res = await axios.get('http://127.0.0.1:5000/api/patient/doctor-availability-week')
+        const res = await axios.get('https://nova-life-hospital.onrender.com/api/patient/doctor-availability-week')
         this.availabilityDates = res.data.dates || []
         this.doctorAvailability = res.data.doctors || []
       } catch (error) {
@@ -484,9 +484,9 @@ export default {
       if (!this.patientId) return
       try {
         const [profileRes, docsRes, apptRes] = await Promise.all([
-          axios.get(`http://127.0.0.1:5000/api/patient/profile/${this.patientId}`),
-          axios.get('http://127.0.0.1:5000/api/doctors'),
-          axios.get(`http://127.0.0.1:5000/api/patient/appointments/${this.patientId}`)
+          axios.get(`https://nova-life-hospital.onrender.com/api/patient/profile/${this.patientId}`),
+          axios.get('https://nova-life-hospital.onrender.com/api/doctors'),
+          axios.get(`https://nova-life-hospital.onrender.com/api/patient/appointments/${this.patientId}`)
         ])
 
         this.profile = profileRes.data || {}
@@ -507,7 +507,7 @@ export default {
     async loadSlots(d) {
       if (d.slots.length > 0) return
       try {
-        const res = await axios.get(`http://127.0.0.1:5000/api/patient/available-slots/${d.id}`)
+        const res = await axios.get(`https://nova-life-hospital.onrender.com/api/patient/available-slots/${d.id}`)
         d.slots = res.data.data || []
       } catch (error) {
         console.error('Error loading slots:', error)
@@ -519,7 +519,7 @@ export default {
         return
       }
       try {
-        await axios.post('http://127.0.0.1:5000/api/patient/book-appointment', {
+        await axios.post('https://nova-life-hospital.onrender.com/api/patient/book-appointment', {
           doctor_id: d.id,
           patient_id: this.patientId,
           slot_id: d.selectedSlot.id
@@ -536,7 +536,7 @@ export default {
     async cancelAppointment(id) {
       if (!confirm('Are you sure you want to cancel this appointment?')) return
       try {
-        await axios.put('http://127.0.0.1:5000/api/patient/cancel-appointment', {
+        await axios.put('https://nova-life-hospital.onrender.com/api/patient/cancel-appointment', {
           appointment_id: id
         })
         alert('Appointment cancelled.')
@@ -548,7 +548,7 @@ export default {
     },
     async viewTreatment(appointmentId) {
       try {
-        const res = await axios.get(`http://127.0.0.1:5000/api/patient/treatment-details/${appointmentId}`)
+        const res = await axios.get(`https://nova-life-hospital.onrender.com/api/patient/treatment-details/${appointmentId}`)
         this.selectedTreatment = res.data
       } catch (error) {
         alert('Failed to load treatment details')
@@ -558,7 +558,7 @@ export default {
       this.exporting = true
       this.exportMessage = null
       try {
-        await axios.post('http://127.0.0.1:5000/api/patient/export-report', {
+        await axios.post('https://nova-life-hospital.onrender.com/api/patient/export-report', {
           patient_id: parseInt(this.patientId)
         })
         this.exportMessage = {
@@ -583,7 +583,7 @@ export default {
     },
     async downloadReport() {
       try {
-        const res = await axios.get(`http://127.0.0.1:5000/api/patient/download-report/${this.patientId}`, {
+        const res = await axios.get(`https://nova-life-hospital.onrender.com/api/patient/download-report/${this.patientId}`, {
           responseType: 'blob'
         })
         const url = window.URL.createObjectURL(new Blob([res.data]))
