@@ -5,3 +5,4 @@ flask-sqlalchemy
 redis
 celery
 gunicorn
+psycopg2-binary
