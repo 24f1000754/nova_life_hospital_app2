@@ -59,22 +59,6 @@
             <p class="auth-subtitle">Sign in to access your NovaLife portal</p>
           </div>
 
-          <!-- Quick Role Autofill Chips (Helpful UX) -->
-          <div class="role-selector-bar">
-            <span class="role-bar-label">Quick Sign-in:</span>
-            <div class="role-pills-group">
-              <button type="button" class="role-chip chip-admin" @click="setDemoCredentials('admin')">
-                <i class="bi bi-shield-lock-fill"></i> Admin
-              </button>
-              <button type="button" class="role-chip chip-doctor" @click="setDemoCredentials('doctor')">
-                <i class="bi bi-heart-pulse-fill"></i> Doctor
-              </button>
-              <button type="button" class="role-chip chip-patient" @click="setDemoCredentials('patient')">
-                <i class="bi bi-person-fill"></i> Patient
-              </button>
-            </div>
-          </div>
-
           <form @submit.prevent="login" class="auth-form">
             <!-- Email Input -->
             <div class="form-field-group">
@@ -165,19 +149,6 @@ export default {
     }
   },
   methods: {
-    setDemoCredentials(role) {
-      this.error = ''
-      if (role === 'admin') {
-        this.email = 'admin@hms.com'
-        this.password = 'admin123'
-      } else if (role === 'doctor') {
-        this.email = 'ummeshafiyabano@gmail.com'
-        this.password = ''
-      } else if (role === 'patient') {
-        this.email = 'afroz.sum17@gmail.com'
-        this.password = ''
-      }
-    },
     async login() {
       this.error = ''
       this.loading = true
