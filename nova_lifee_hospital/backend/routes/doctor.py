@@ -61,23 +61,28 @@ def create_doctor():
 @doctor_bp.route("/api/doctors", methods=["GET"])
 def get_doctors():
 
-    cached = get_cache("doctors_list")
-    if cached:
-        return jsonify({"source": "cache", "data": cached})
+    try:
+        cached = get_cache("doctors_list")
+        if cached:
+            return jsonify({"source": "cache", "data": cached})
+    except Exception as e:
+        print("Cache read failed:", e)
 
     doctors = Doctor.query.all()
     data = []
 
     for d in doctors:
         user = User.query.get(d.user_id)
-
         data.append({
             "id": d.id,
             "name": user.name if user else "Unknown",
             "specialization": d.specialization
         })
 
-    set_cache("doctors_list", data, ex=120)
+    try:
+        set_cache("doctors_list", data, ex=120)
+    except Exception as e:
+        print("Cache write failed:", e)
 
     return jsonify({"source": "db", "data": data})
 
