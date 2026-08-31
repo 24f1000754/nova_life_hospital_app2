@@ -60,6 +60,34 @@
           </div>
 
           <form @submit.prevent="login" class="auth-form">
+            <!-- Role Selector Bar -->
+            <div class="role-selector-bar">
+              <span class="role-bar-label">Sign in as:</span>
+              <div class="role-pills-group">
+                <span
+                  class="role-chip chip-admin"
+                  :class="{ 'chip-active': selectedRole === 'admin' }"
+                  @click="selectedRole = 'admin'"
+                >
+                  <i class="bi bi-shield-lock"></i> Admin
+                </span>
+                <span
+                  class="role-chip chip-doctor"
+                  :class="{ 'chip-active': selectedRole === 'doctor' }"
+                  @click="selectedRole = 'doctor'"
+                >
+                  <i class="bi bi-heart-pulse"></i> Doctor
+                </span>
+                <span
+                  class="role-chip chip-patient"
+                  :class="{ 'chip-active': selectedRole === 'patient' }"
+                  @click="selectedRole = 'patient'"
+                >
+                  <i class="bi bi-person"></i> Patient
+                </span>
+              </div>
+            </div>
+
             <!-- Email Input -->
             <div class="form-field-group">
               <label class="form-label" for="login-email">Email Address</label>
@@ -143,6 +171,7 @@ export default {
     return {
       email: '',
       password: '',
+      selectedRole: '',
       error: '',
       loading: false,
       showPassword: false
@@ -163,7 +192,6 @@ export default {
         localStorage.setItem('user_id', res.data.user_id)
         localStorage.setItem('role', res.data.role)
 
-        // Dispatch storage event for instant navbar sync
         window.dispatchEvent(new Event('storage'))
 
         if (res.data.role === 'admin') {
@@ -223,9 +251,6 @@ export default {
   overflow: hidden;
 }
 
-/* ==========================================================================
-   LEFT SHOWCASE PANEL
-   ========================================================================== */
 .auth-showcase-panel {
   background: linear-gradient(135deg, rgba(2, 132, 199, 0.15) 0%, rgba(37, 99, 235, 0.25) 100%);
   border-right: 1px solid rgba(255, 255, 255, 0.1);
@@ -309,9 +334,6 @@ export default {
   padding-top: 24px;
 }
 
-/* ==========================================================================
-   RIGHT FORM PANEL
-   ========================================================================== */
 .auth-form-panel {
   padding: 48px 42px;
   background: rgba(255, 255, 255, 0.02);
@@ -352,7 +374,6 @@ export default {
   color: var(--slate-400);
 }
 
-/* Role Selector Bar */
 .role-selector-bar {
   display: flex;
   align-items: center;
@@ -401,7 +422,22 @@ export default {
 .chip-doctor:hover { border-color: #38bdf8; color: #7dd3fc; }
 .chip-patient:hover { border-color: #34d399; color: #6ee7b7; }
 
-/* Form Fields */
+.role-chip.chip-active.chip-admin {
+  background: rgba(129, 140, 248, 0.2);
+  border-color: #818cf8;
+  color: #a5b4fc;
+}
+.role-chip.chip-active.chip-doctor {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
+  color: #7dd3fc;
+}
+.role-chip.chip-active.chip-patient {
+  background: rgba(52, 211, 153, 0.2);
+  border-color: #34d399;
+  color: #6ee7b7;
+}
+
 .form-field-group {
   margin-bottom: 20px;
 }
@@ -472,7 +508,6 @@ export default {
   color: white;
 }
 
-/* Alert */
 .saas-alert {
   display: flex;
   align-items: flex-start;
@@ -508,7 +543,6 @@ export default {
   padding: 0;
 }
 
-/* Submit Button */
 .btn-auth-submit {
   width: 100%;
   padding: 13px;
@@ -539,7 +573,6 @@ export default {
   cursor: not-allowed;
 }
 
-/* Card Footer */
 .auth-card-footer {
   margin-top: 28px;
   padding-top: 20px;
@@ -566,9 +599,6 @@ export default {
   text-decoration: underline;
 }
 
-/* ==========================================================================
-   RESPONSIVENESS
-   ========================================================================== */
 @media (max-width: 880px) {
   .auth-layout-container {
     grid-template-columns: 1fr;
